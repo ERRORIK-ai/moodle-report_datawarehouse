@@ -149,8 +149,13 @@ function report_datawarehouse_download_run($runid) {
     $timenow = time();
     $run = $DB->get_record('report_datawarehouse_runs', ['id' => $runid]);
 
-    [$itemid, $filename, $csvtimestamp] = report_datawarehouse_generate_csv(
-        $run->queryid, $run->backendid, $timenow, $run->cmid, $run->courseid, false
+[$itemid, $filename, $csvtimestamp] = report_datawarehouse_generate_csv(
+        $run->queryid,
+        $run->backendid,
+        $timenow,
+        $run->cmid,
+        $run->courseid,
+        false
     );
 
     $contextid = ($run->cmid > 0) ? \context_module::instance($run->cmid)->id : \context_system::instance()->id;
@@ -183,7 +188,14 @@ function report_datawarehouse_download_run($runid) {
  * @throws file_exception
  * @throws stored_file_creation_exception
  */
-function report_datawarehouse_generate_csv(int $queryid, int $backendid, int $timenow, int $cmid, int $courseid, bool $upload = true) {
+function report_datawarehouse_generate_csv(
+    int $queryid,
+    int $backendid,
+    int $timenow,
+    int $cmid,
+    int $courseid,
+    bool $upload = true
+) {
     global $DB;
     $starttime = microtime(true);
 
